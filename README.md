@@ -39,6 +39,20 @@ https://test.example.com {
 }
 ```
 
+The request received on the backen will look similar to below with the newly added JA4H header.
+
+```bash
+GET / HTTP/1.1
+Host: 127.0.0.1:9000
+User-Agent: curl/7.81.0
+Accept: */*
+Ja4h: ge11nn020000_a00508f53a24_000000000000_000000000000
+X-Forwarded-For: 127.0.0.1
+X-Forwarded-Host: 127.0.0.1:9000
+X-Forwarded-Proto: http
+Accept-Encoding: gzip
+```
+
 
 ## References
 

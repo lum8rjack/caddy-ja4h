@@ -40,7 +40,7 @@ func (m *Middleware) Validate() error {
 // ServeHTTP implements caddyhttp.MiddlewareHandler.
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
 	j := ja4h.JA4H(r)
-	r.Header.Add("JA4H", j)
+	r.Header.Add("Ja4h", j)
 	return next.ServeHTTP(w, r)
 }
 
