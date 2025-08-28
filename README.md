@@ -59,3 +59,7 @@ Accept-Encoding: gzip
 - [JA4+ Network Fingerprinting](https://blog.foxio.io/ja4+-network-fingerprinting)
 - [ja4 GitHub](https://github.com/FoxIO-LLC/ja4)
 - [go-ja4h](https://github.com/lum8rjack/go-ja4h)
+
+# Licensing
+
+The code in this repository is MIT licensed. However, JA4H itself is subject to additional restricitons. Please see the [NOTICE](NOTICE) file for further details.
