@@ -41,6 +41,12 @@ func (m *Middleware) Validate() error {
 func (m Middleware) ServeHTTP(w http.ResponseWriter, r *http.Request, next caddyhttp.Handler) error {
 	j := ja4h.JA4H(r)
 	r.Header.Add("Ja4h", j)
+
+	// Add to Caddy's replacer for easier logging
+	if repl, ok := r.Context().Value(caddy.ReplacerCtxKey).(*caddy.Replacer); ok {
+		repl.Set("ja4h", j)
+	}
+
 	return next.ServeHTTP(w, r)
 }
 

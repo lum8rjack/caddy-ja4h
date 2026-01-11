@@ -12,7 +12,7 @@ xcaddy build --with github.com/lum8rjack/caddy-ja4h
 If you want to clone and make any changes, you can test locally with the following command:
 ```bash
 # Specify the location of the local build
- xcaddy build --with github.com/lum8rjack/caddy-ja4h=./caddy-ja4h
+xcaddy build --with github.com/lum8rjack/caddy-ja4h=./caddy-ja4h
 ```
 
 ### Caddyfile
@@ -53,6 +53,71 @@ X-Forwarded-Proto: http
 Accept-Encoding: gzip
 ```
 
+### Add JA4H to Caddy Logs
+
+By default the newly created header is not added to the logs since the logging happens earlier than this module in the request lifecycle. You can append the Ja4h header by using `log_append`.
+```
+{
+  admin off
+  order ja4h_header first
+}
+
+http://localhost:8000 {
+  ja4h_header
+  log {
+    output stdout
+    format json
+  }
+
+  handle /* {
+    # Append to logs
+    log_append ja4h_header {ja4h}
+
+    respond "Status ok" 200 
+  }
+}
+```
+
+Running curl will result in "Success" and the log file should look similar to the following:
+```json
+{
+  "level": "info",
+  "ts": 1768146425.651497,
+  "logger": "http.log.access.log0",
+  "msg": "handled request",
+  "request": {
+    "remote_ip": "::1",
+    "remote_port": "50341",
+    "client_ip": "::1",
+    "proto": "HTTP/1.1",
+    "method": "GET",
+    "host": "localhost:8000",
+    "uri": "/",
+    "headers": {
+      "User-Agent": [
+        "curl/8.7.1"
+      ],
+      "Accept": [
+        "*/*"
+      ]
+    }
+  },
+  "bytes_read": 0,
+  "user_id": "",
+  "duration": 0.0000415,
+  "size": 7,
+  "status": 200,
+  "resp_headers": {
+    "Server": [
+      "Caddy"
+    ],
+    "Content-Type": [
+      "text/plain; charset=utf-8"
+    ]
+  },
+  "ja4h_header": "ge11nn020000_a00508f53a24_000000000000_000000000000"
+}
+```
 
 ## References
 
